@@ -12,9 +12,9 @@ import java.util.*;
 public class Cell
 {
     // The possible states.
-    public static final int ALIVE = 0, DEAD = 1, DYING = 2;
+    public static final int ALIVE = 0, DEAD = 1;
     // The number of possible states.
-    public static final int NUM_STATES = 3;
+    public static final int NUM_STATES = 2;
 
     // The cell's state.
     private int state;
@@ -47,21 +47,35 @@ public class Cell
      */
     public int getNextState()
     {
+        int size = neighbors.length;
         if(state == DEAD) {
             // Count the number of neighbors that are alive.
             int aliveCount = 0;
             for(Cell n : neighbors) {
-                if(n.getState() == ALIVE) {
+                if(n.getState() == ALIVE ) {
                     aliveCount++;
                 }
             }
             return aliveCount == 2 ? ALIVE : DEAD;
         }
-        else if(state == DYING) {
-            return DEAD;
+        else if(state == DEAD) {
+            for(Cell n : neighbors) {
+                if(n.getState() == DEAD && size == 3) {
+                    setState(ALIVE); 
+                }
+           }
+           return state;
+        }
+        else if(state == ALIVE) {
+            for(Cell n : neighbors) {
+                if(n.getState() == ALIVE && (size > 3 || size < 2)) {
+                    setState(DEAD);
+                }
+            }
+            return state;
         }
         else {
-            return DYING;
+            return ALIVE;
         }
     }
     

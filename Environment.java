@@ -62,6 +62,12 @@ public class Environment
                 setCellState(row, col, rowOfStates[col]);
             }
         }
+        if(numRows > cells.length){
+            
+        }
+        if(numCols > cells[0].length){
+            
+        }
     }
     
     /**
