@@ -47,36 +47,26 @@ public class Cell
      */
     public int getNextState()
     {
-        int size = neighbors.length;
+        int status = DEAD;
+        int aliveCount = 0;
+        for(Cell n : neighbors) {
+            if(n.getState() == ALIVE ) {
+                aliveCount++;
+            }
+        }
+    
         if(state == DEAD) {
-            // Count the number of neighbors that are alive.
-            int aliveCount = 0;
-            for(Cell n : neighbors) {
-                if(n.getState() == ALIVE ) {
-                    aliveCount++;
-                }
+            if(aliveCount == 3) {
+                status = ALIVE;
             }
-            return aliveCount == 2 ? ALIVE : DEAD;
         }
-        else if(state == DEAD) {
-            for(Cell n : neighbors) {
-                if(n.getState() == DEAD && size == 3) {
-                    setState(ALIVE); 
-                }
-           }
-           return state;
-        }
-        else if(state == ALIVE) {
-            for(Cell n : neighbors) {
-                if(n.getState() == ALIVE && (size > 3 || size < 2)) {
-                    setState(DEAD);
-                }
+        
+        if(state == ALIVE) {
+            if(aliveCount == 2 || aliveCount == 3) {
+                status = ALIVE;
             }
-            return state;
         }
-        else {
-            return ALIVE;
-        }
+        return status;
     }
     
     /**
