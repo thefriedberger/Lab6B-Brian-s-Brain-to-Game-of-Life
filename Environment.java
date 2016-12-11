@@ -150,9 +150,11 @@ public class Environment
                 // This process will also include the cell.
                 for(int dr = -1; dr <= 1; dr++) {
                     for(int dc = -1; dc <= 1; dc++) {
-                        int nr = (numRows + row + dr) % numRows;
-                        int nc = (numCols + col + dc) % numCols;
-                        neighbors.add(cells[nr][nc]);
+                        int nr = row + dr;
+                        int nc = col + dc;
+                        if ((nr < numRows && nr > 1) && (nc < numCols && nc > 1)){
+                            neighbors.add(cells[nr][nc]);
+                        }
                     }
                 }
                 // The neighbours should not include the cell at
